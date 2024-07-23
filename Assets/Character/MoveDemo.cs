@@ -12,13 +12,11 @@ public class MoveDemo : MonoBehaviour
     private Vector3 _latestPos;
     
     //Playerの移動方向の倍率
-    [SerializeField] private float _speedMagnification = 5.0f;
+    [SerializeField] private float _speed = 1.0f;
     
     #region HashAnimation
 
     private static readonly int MoveSpeed = Animator.StringToHash("MoveSpeed");
-    private static readonly int Attack1 = Animator.StringToHash("Attack");
-
     #endregion
 
     private void Start()
@@ -40,15 +38,19 @@ public class MoveDemo : MonoBehaviour
 
     private void FixedUpdate()
     {
+        MoveCharacter();
+    }
+
+    private void MoveCharacter()
+    {
         // RigidBodyを使用して移動
-        var velocity = _direction * _speedMagnification;
+        var velocity = _direction * _speed;
         //RigidBodyの速度を設定
-        //ToDo:現在の速度と目標の速度をSlerp
-        _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
+        _rb.velocity = new Vector3(velocity.x, 0, velocity.z);
 
         // 前フレームとの位置の差から進行方向を計算
         var differenceDis = new Vector3(transform.position.x, 0, transform.position.z) -
-                                new Vector3(_latestPos.x, 0, _latestPos.z);
+                            new Vector3(_latestPos.x, 0, _latestPos.z);
         //差が一定以上の場合、進行方向に回転
         if (differenceDis.sqrMagnitude > 0.0001f)
         {
@@ -65,13 +67,5 @@ public class MoveDemo : MonoBehaviour
 
         // 最新の位置を更新
         _latestPos = transform.position;
-    }
-    
-    private void Attack()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            _anim.SetTrigger(Attack1);
-        }
     }
 }

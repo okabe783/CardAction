@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     #region HashAnimation
 
     private static readonly int MoveSpeed = Animator.StringToHash("MoveSpeed");
-    private static readonly int Attack1 = Animator.StringToHash("Attack");
 
     #endregion
     
@@ -34,7 +33,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Move();
-        Attack();
     }
 
     private void Move()
@@ -66,13 +64,5 @@ public class Player : MonoBehaviour
 
         //Moveは指定したベクトルだけ移動させる命令
         _characterController.Move(_moveDirection * Time.deltaTime);
-    }
-
-    private void Attack()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            _anim.SetTrigger(Attack1);
-        }
     }
 }
