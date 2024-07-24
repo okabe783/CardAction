@@ -5,18 +5,17 @@ public class MoveDemo : MonoBehaviour
     private Rigidbody _rb;
     private Animator _anim;
     
-    //Playerの移動方向を示すベクトル
-    private Vector3 _direction;
-    
     //最新の位置を記録するためのベクトル
     private Vector3 _latestPos;
-    
     //Playerの移動方向の倍率
     [SerializeField] private float _speed = 1.0f;
+    private float _horizontal;
+    private float _vertical;
     
     #region HashAnimation
 
     private static readonly int MoveSpeed = Animator.StringToHash("MoveSpeed");
+    
     #endregion
 
     private void Start()
@@ -30,10 +29,8 @@ public class MoveDemo : MonoBehaviour
     private void Update()
     {
         // 入力から移動方向を取得
-        var x = Input.GetAxisRaw("Horizontal");　//水平方向の入力
-        var z = Input.GetAxisRaw("Vertical");　//垂直方向の入力
-        //移動方向の正規化
-        _direction = new Vector3(x, 0, z).normalized;
+        _horizontal = Input.GetAxisRaw("Horizontal");　//水平方向の入力
+        _vertical = Input.GetAxisRaw("Vertical");　//垂直方向の入力
     }
 
     private void FixedUpdate()
@@ -41,13 +38,15 @@ public class MoveDemo : MonoBehaviour
         MoveCharacter();
     }
 
+    //カメラの向きに移動
     private void MoveCharacter()
     {
-        // RigidBodyを使用して移動
-        var velocity = _direction * _speed;
+        //カメラの方向から、X-Z平面の単位ベクトルを取得
+        var cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1).normalized);
+        //方向キーの入力値をとカメラの向きから、移動方向を決定
+        var moveSpeed = cameraForward * _vertical + Camera.main.transform.right * _horizontal;
         //RigidBodyの速度を設定
-        _rb.velocity = new Vector3(velocity.x, 0, velocity.z);
-
+        _rb.velocity = moveSpeed * _speed + new Vector3(0,_rb.velocity.y,0);
         // 前フレームとの位置の差から進行方向を計算
         var differenceDis = new Vector3(transform.position.x, 0, transform.position.z) -
                             new Vector3(_latestPos.x, 0, _latestPos.z);
