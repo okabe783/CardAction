@@ -5903,7 +5903,8 @@ MonoBehaviour:
   _magicItemPrefab: {fileID: 164416, guid: 3a05102230f1aa64c9b2d887138b4c5b, type: 3}
   _magicSpawnPos: {fileID: 8409748000196272048}
   _magicSpeed: 10
-  _coolTime: 0
+  _coolTime: 3
+  _radius: 10
 --- !u!1 &6322447326430883961
 GameObject:
   m_ObjectHideFlags: 0
