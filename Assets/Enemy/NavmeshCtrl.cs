@@ -28,7 +28,6 @@ public class NavmeshCtrl : MonoBehaviour
         //NavmeshがActiveでnullではなければ
         if (_navMeshAgent != null && _navMeshAgent.isActiveAndEnabled)
         {
-            Debug.Log("aaa");
             _nextState = State.EnemyMove.Chasing; //追跡を開始
             _navMeshAgent.SetDestination(_player.transform.position);
             _navMeshAgent.isStopped = false; //NavMeshをセット
@@ -42,7 +41,6 @@ public class NavmeshCtrl : MonoBehaviour
         {
             _nextState = State.EnemyMove.Attacking; //攻撃を開始
             _navMeshAgent.isStopped = true;
-            Debug.Log(_nextState);
         }
     }
 }
