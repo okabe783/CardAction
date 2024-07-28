@@ -122,46 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: fd15677b6b70c7944aaebb891db79c03, type: 2}
---- !u!1 &46666995 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1417030086926190612, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
-  m_PrefabInstance: {fileID: 1363445187}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &46666996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46666995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e845e62400fca1e4b812cde21e17cf27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 711188004}
---- !u!195 &46666997
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46666995}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 6
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1 &697740166
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +344,10 @@ PrefabInstance:
     - target: {fileID: 1417030086926190612, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417030086926190612, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -664,16 +628,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4517444529735520272, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: m_Speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4517444529735520272, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: m_Height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4517444529735520272, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: m_Radius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4517444529735520272, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: m_AutoRepath
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4517444529735520272, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4517444529735520272, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: m_AutoTraverseOffMeshLink
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6791968725481244151, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 711188004}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1417030086926190612, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 46666997}
-    - targetCorrespondingSourceObject: {fileID: 1417030086926190612, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 46666996}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
 --- !u!4 &1487261845 stripped
 Transform:
@@ -731,6 +717,10 @@ PrefabInstance:
     - target: {fileID: 1417030086926190612, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417030086926190612, guid: 5d0e3f077967fcb4ead9245c60159791, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

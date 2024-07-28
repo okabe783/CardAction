@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -12,6 +13,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float _magicSpeed = 10f;
     //魔法のクールタイム
     [SerializeField] private float _coolTime;
+    
+    private Animator _animator;
 
     #endregion
 
@@ -25,6 +28,17 @@ public class PlayerAttack : MonoBehaviour
     private readonly Collider[] _buffer = new Collider[_capacity];
 
     #endregion
+
+    #region アニメーション
+
+    private static readonly int Attack = Animator.StringToHash("Attack");
+
+    #endregion
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -54,6 +68,7 @@ public class PlayerAttack : MonoBehaviour
             var rb = magic.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                _animator.SetTrigger(Attack);
                 //方向ベクトルを求めてSpeedをかけて移動させる
                 var direction = (nearestEnemy.transform.position - _magicSpawnPos.position).normalized;
                 rb.velocity = direction * _magicSpeed;
