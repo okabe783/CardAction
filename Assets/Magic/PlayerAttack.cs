@@ -74,6 +74,11 @@ public class PlayerAttack : MonoBehaviour
                 rb.velocity = direction * _magicSpeed;
             }
         }
+        else
+        {
+            _animator.SetTrigger(Attack);
+            Instantiate(_magicItemPrefab, _magicSpawnPos.position, Quaternion.identity);
+        }
     }
 
     //コライダーの検索
