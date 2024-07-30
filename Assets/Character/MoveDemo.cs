@@ -12,7 +12,7 @@ public class MoveDemo : MonoBehaviour
     private float _horizontal;
     private float _vertical;
     
-    #region HashAnimation
+    #region アニメーションを管理
 
     private static readonly int MoveSpeed = Animator.StringToHash("MoveSpeed");
     

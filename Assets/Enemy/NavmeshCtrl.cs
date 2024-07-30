@@ -12,8 +12,13 @@ public class NavmeshCtrl : MonoBehaviour
     
     private State.EnemyMove _currentState = State.EnemyMove.None; // 現在の状態
     private State.EnemyMove _nextState = State.EnemyMove.None; // 次の状態
-    
+
+    #region アニメーションを管理
+
     private static readonly int Speed = Animator.StringToHash("Speed");
+
+    #endregion
+    
 
     //Speed
     private float _targetSpeed; 
