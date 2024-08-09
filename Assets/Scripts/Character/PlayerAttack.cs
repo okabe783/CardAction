@@ -32,14 +32,22 @@ public class PlayerAttack : MonoBehaviour
     //対象内のコライダーをリストに格納
     private readonly Collider[] _buffer = new Collider[_capacity];
 
+    //一番近い敵を設定する
+    private Collider _nearestEnemy;
+
     #endregion
 
     #region アニメーション
 
     private Animator _animator;
-    private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int Attack = Animator.StringToHash("Special");
 
     #endregion
+
+    //移動可能か判定
+    private bool _isMove = true;
+
+    public bool IsMove => _isMove;
 
     private void Start()
     {
@@ -49,13 +57,15 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         IsCheckAttack();
+        //最も近い敵を取得する
+        _nearestEnemy = CheckCollision();
 
         //Spaceが押されたときにクールタイムが3秒以上であれば魔法を発射
         if (Input.GetKeyDown(KeyCode.Space) && _isAttack)
         {
             _isAttack = false;
+            _isMove = false;
             _coolTime = 0;
-            //CastMagic();
             _animator.SetTrigger(Attack);
         }
     }
@@ -63,10 +73,8 @@ public class PlayerAttack : MonoBehaviour
     //最も近い敵に向かって魔法を発動する
     private void CastMagic()
     {
-        //最も近い敵を取得する
-        var nearestEnemy = CheckCollision();
         //近くに敵がいる場合
-        if (nearestEnemy != null)
+        if (_nearestEnemy != null)
         {
             //魔法のプレハブを生成
             var magic = Instantiate(_magicItemPrefab, _magicSpawnPos.position, Quaternion.identity);
@@ -75,13 +83,12 @@ public class PlayerAttack : MonoBehaviour
             if (rb != null)
             {
                 //方向ベクトルを求めてSpeedをかけて移動させる
-                var direction = (nearestEnemy.bounds.center - _magicSpawnPos.position).normalized;
+                var direction = (_nearestEnemy.bounds.center - _magicSpawnPos.position).normalized;
                 rb.velocity = direction * _magicSpeed;
             }
         }
         else
         {
-            //_animator.SetTrigger(Attack);
             Instantiate(_magicItemPrefab, _magicSpawnPos.position, Quaternion.identity);
         }
     }
@@ -90,7 +97,9 @@ public class PlayerAttack : MonoBehaviour
     private Collider CheckCollision()
     {
         //範囲内のコライダーの数を取得
-        var hitCount = Physics.OverlapSphereNonAlloc(transform.position, _radius, _buffer);
+        //OverlapSphereと違ってあらかじめ用意した配列に格納するためメモリ消費量を抑えることができる
+        var hitCount =
+            Physics.OverlapSphereNonAlloc(transform.position + Camera.main.transform.forward * 5f, _radius, _buffer);
         //一番近い敵を取得
         return FindNearestCollider(_buffer, hitCount);
     }
@@ -123,7 +132,7 @@ public class PlayerAttack : MonoBehaviour
 
         return result;
     }
-    
+
     //攻撃可能であるかどうかを判定する
     private void IsCheckAttack()
     {
@@ -135,12 +144,28 @@ public class PlayerAttack : MonoBehaviour
             _isAttack = true;
     }
 
+    //AnimationEvent用の関数
+    //移動を可能にする
+    private void AdjustMovableValue()
+    {
+        _isMove = true;
+    }
+
+    //敵の方向を見て魔法を打つ
+    private void LookAt()
+    {
+        if (_nearestEnemy)
+            transform.LookAt(_nearestEnemy.transform);
+    }
+
+    #region エディター拡張
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        //Todo:前にのみ判定
-        var hitCount = Physics.OverlapSphereNonAlloc(transform.position, _radius, _buffer);
-        if (hitCount == 0)
+        var hitCount =
+            Physics.OverlapSphereNonAlloc(transform.position + Camera.main.transform.forward * 5f, _radius, _buffer);
+        if (hitCount == 1)
         {
             Gizmos.color = Color.blue;
         }
@@ -149,7 +174,9 @@ public class PlayerAttack : MonoBehaviour
             Gizmos.color = Color.red;
         }
 
-        Gizmos.DrawSphere(transform.position, _radius);
+        Gizmos.DrawSphere(transform.position + Camera.main.transform.forward * 5f, _radius);
     }
 #endif
+
+    #endregion
 }
